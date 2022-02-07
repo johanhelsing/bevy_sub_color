@@ -1,0 +1,14 @@
+[package]
+name = "bevy_sub_color"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+keywords = ["gamedev", "bevy"]
+categories = ["game-development"]
+
+[dependencies]
+bevy = { version = "0.6", default-features = false, features = ["render"] }
+derive_more = "0.99"
+
+[dev-dependencies]
+bevy = { version = "0.6", default-features = false, features = ["render", "bevy_winit"] }
