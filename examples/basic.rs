@@ -40,7 +40,7 @@ fn setup(
             rotation: Quat::IDENTITY,
             scale: Vec3::splat(100.),
         },
-        material: materials.add(Color::rgb(1., 0., 1.).into())),
+        material: materials.add(Color::rgb(1., 0., 1.).into()),
         ..Default::default()
     });
 
@@ -51,7 +51,7 @@ fn setup(
             rotation: Quat::IDENTITY,
             scale: Vec3::splat(100.),
         },
-        material: materials.add(Color::rgb(0., 1., 1.).into())),
+        material: materials.add(Color::rgb(0., 1., 1.).into()),
         ..Default::default()
     });
 }
