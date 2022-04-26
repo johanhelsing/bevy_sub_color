@@ -4,8 +4,12 @@ use bevy::{
     prelude::*,
     reflect::TypeUuid,
     render::{
+        mesh::MeshVertexBufferLayout,
         render_asset::{PrepareAssetError, RenderAsset, RenderAssets},
-        render_resource::{BlendComponent, BlendFactor, BlendOperation, BlendState},
+        render_resource::{
+            BlendComponent, BlendFactor, BlendOperation, BlendState, RenderPipelineDescriptor,
+            SpecializedMeshPipelineError,
+        },
         renderer::RenderDevice,
     },
     sprite::{GpuColorMaterial, Material2dPipeline, Material2dPlugin, SpecializedMaterial2d},
@@ -55,12 +59,17 @@ impl RenderAsset for SubColorMaterial {
 impl SpecializedMaterial2d for SubColorMaterial {
     type Key = ();
 
-    fn key(_material: &<Self as RenderAsset>::PreparedAsset) -> Self::Key {}
+    fn key(
+        _render_device: &RenderDevice,
+        _material: &<Self as RenderAsset>::PreparedAsset,
+    ) -> Self::Key {
+    }
 
     fn specialize(
         _key: Self::Key,
-        descriptor: &mut bevy::render::render_resource::RenderPipelineDescriptor,
-    ) {
+        descriptor: &mut RenderPipelineDescriptor,
+        _layout: &MeshVertexBufferLayout,
+    ) -> Result<(), SpecializedMeshPipelineError> {
         let fragment = descriptor.fragment.as_mut().unwrap();
         fragment.targets[0].blend = Some(BlendState {
             color: BlendComponent {
@@ -70,6 +79,7 @@ impl SpecializedMaterial2d for SubColorMaterial {
             },
             alpha: BlendComponent::OVER,
         });
+        Ok(())
     }
 
     fn bind_group(
